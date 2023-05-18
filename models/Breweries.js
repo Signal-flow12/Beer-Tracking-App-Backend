@@ -1,20 +1,20 @@
 const mongoose = require('mongoose');
 
-const breweriesSchema = new breweriesSchema.Schema(
+const BreweriesSchema = new mongoose.Schema(
     {
         name: {
             type: String,
             required: [true, 'Brewery name required']
         },
 
-        town: {
+        adress: {
             type: String,
             required: [true, 'Town name required']
         },
 
         website: {
             type: String,
-            [required: true, 'Please provide a website']
+            required: [true, 'Please provide a website']
         },
 
         image: {
@@ -33,6 +33,6 @@ const breweriesSchema = new breweriesSchema.Schema(
 
 );
 
-const Breweries = mongoose.model('breweries', breweriesSchema )
+const Breweries = mongoose.model('breweries', BreweriesSchema);
 
 module.exports = Breweries

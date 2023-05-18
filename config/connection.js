@@ -1,19 +1,19 @@
+require('dotenv').config();
 const mongoose = require("mongoose");
 
-const connectionString = process.env.MONGO_DB_URI;
+const { MONGO_DB_URI} = process.env
 
-mongoose.connect(connectionString);
+mongoose.connect(MONGO_DB_URI);
 
 mongoose.connection.on('connected', () => {
+    //console.log(mongoose.connection)
     console.log(`[${new Date().toLocaleTimeString()}] - MongoDB connected... 🙌 🙌 🙌`)
 })
 
-// mongoDB connection on error
 mongoose.connection.on('error', (error) => {
     console.log('MongoDB connection error ', error)
 })
 
-// disconnecting from mongoDB
 mongoose.connection.on('disconnected', () => {
     console.log('MongoDB disconnected ⚡️ 🔌 ⚡️')
 })
