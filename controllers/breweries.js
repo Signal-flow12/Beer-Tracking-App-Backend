@@ -27,25 +27,16 @@ const seedData = [
     }
 ]
 
-// router.get('', async (req, res, next) => {
-//     try {
-//         let brew;
-//         console.log(req.query);
-//         if(req.query.search) {
-//             brew = await Breweries.find({author: req.query.search})
-//             console.log(brew);
-//         } else {
-//             brew = await Breweries.find({});
-//             console.log(brew);
-//         }
-//         res.json(brew)
-//     } catch(err) {
-//         // If there's an error, it'll go to the catch block
-//         console.log(err);
-//         next();
-//     }
-// })
+//Index route
+router.get("/", async (req, res, next) => {
+    try{
+        res.json(await Breweries.find({}))
+    }catch(err){
+        console.log(err)
+    }
+});
 
+//Seed route
 router.get('/seed', async (req, res, next) => {
     try {
         await Breweries.deleteMany({});
@@ -54,6 +45,18 @@ router.get('/seed', async (req, res, next) => {
     } catch(err) {
         console.log(err);
         next();
+    }
+})
+
+//Show
+router.get('/:id', async (req, res, next) => {
+    try{
+        const brewery = await Breweries.findById(req.params.id)
+        //console.log(brewery)
+        res.json(brewery)
+    }catch(err){
+        console.log(err)
+        next()
     }
 })
 
