@@ -7,7 +7,7 @@ const BreweriesSchema = new mongoose.Schema(
             required: [true, 'Brewery name required']
         },
 
-        adress: {
+        address: {
             type: String,
             required: [true, 'Town name required']
         },
