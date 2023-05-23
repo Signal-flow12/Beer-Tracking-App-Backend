@@ -4,7 +4,9 @@ const { PORT, MONGO_DB_URI } = process.env;
 const cors = require("cors");
 const app = express();
 
+
 //constroller imports
+const authController = require("./controllers/auth")
 const breweriesController = require("./controllers/breweries")
 
 //Middleware
@@ -19,6 +21,7 @@ app.get("/", (req, res) => {
     res.send("hello beer wold")
 })
 
+app.use("/auth", authController);
 app.use('/breweries', breweriesController);
 
 app.get('/*', (req, res) => {

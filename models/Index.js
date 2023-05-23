@@ -1,5 +1,6 @@
 require('../config/connection');
 
 module.exports = {
-        Breweries: require('./Breweries')
+        Breweries: require('./Breweries'),
+        Users: require('./Users')
 }
