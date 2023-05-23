@@ -61,7 +61,7 @@ router.get('/:id', async (req, res, next) => {
 })
 
 //post
-router.post('', async (req, res) => {
+router.post('/', async (req, res, next) => {
     try{
         res.json(await Breweries.create(req.body))
     }catch (err){

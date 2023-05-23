@@ -9,7 +9,7 @@ const BreweriesSchema = new mongoose.Schema(
 
         address: {
             type: String,
-            required: [true, 'Town name required']
+            required: [true, 'Address required']
         },
 
         website: {
@@ -25,6 +25,10 @@ const BreweriesSchema = new mongoose.Schema(
         flagship: {
             type: String,
             required: [true, 'Proivde a flagsip brew']
+        },
+
+        likes: {
+            type: Number
         }
     },
     {
