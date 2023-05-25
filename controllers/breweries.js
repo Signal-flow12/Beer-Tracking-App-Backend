@@ -64,27 +64,6 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
-//post comments
-// post comments
-router.post('/:id/comments', async (req, res, next) => {
-    try {
-      const breweryId = req.params.id; // Retrieve the brewery ID from the request parameters
-  
-      // Create a new comment using the Comments model and the provided request body
-      const newComment = await Comments.create({
-        rating: req.body.rating,
-        comments: req.body.comments,
-        user: req.body.user,
-        breweries: breweryId, // Associate the comment with the specified brewery ID
-      });
-  
-      res.json(newComment);
-    } catch (err) {
-      console.log(err);
-      next(err);
-    }
-  });
-  
 //post
 router.post('/', async (req, res, next) => {
     try{
