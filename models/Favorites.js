@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const BreweriesSchema = new mongoose.Schema(
+const FavoritesSchema = new mongoose.Schema(
     {
         name: {
             type: String,
@@ -26,17 +26,13 @@ const BreweriesSchema = new mongoose.Schema(
             type: String,
             required: [true, 'Proivde a flagsip brew']
         },
-
-        likes: {
-            type: Number
-        },
     },
-    {
-        timestamps: true
-    }
+        {
+            timestamps: true
+        }
 
 );
 
-const Breweries = mongoose.model('breweries', BreweriesSchema);
+const Favorites = mongoose.model("favorite", FavoritesSchema);
 
-module.exports = Breweries
+module.exports = Cart
