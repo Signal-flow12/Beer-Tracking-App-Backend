@@ -55,8 +55,7 @@ router.get('/seed', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
     try{
         const brewery = await Breweries.findById(req.params.id)
-        //comments
-        console.log(breweryComments)
+        //console.log(brewery)
         res.json(brewery)
     }catch(err){
         console.log(err)
