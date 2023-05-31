@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const BreweriesSchema = new mongoose.Schema(
     {
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
         name: {
             type: String,
             required: [true, 'Brewery name required']
@@ -27,9 +31,14 @@ const BreweriesSchema = new mongoose.Schema(
             required: [true, 'Proivde a flagsip brew']
         },
 
-        likes: {
-            type: Number
-        },
+        likes: [
+            {
+                user: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "User"
+                }
+            }
+        ]
     },
     {
         timestamps: true

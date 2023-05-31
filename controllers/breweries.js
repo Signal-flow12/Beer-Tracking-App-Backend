@@ -1,16 +1,17 @@
 const express = require("express");
 const router = express.Router();
+const { requireToken, handleValidateOwnership } = require('../middleware/auth');
 
-const { Breweries, Comments } = require("../models/Index");
+const { Breweries, Comments, Users } = require("../models/Index");
 
 const seedData = [
     {
         name: "Kane Brewing",
         address: "1750 Bloomsbury Ave, Ocean Township, NJ 07712",
         website:"https://www.kanebrewing.com/",
-        image: "https://upload.wikimedia.org/wikipedia/en/b/be/Kane_Brewery.png",
+        image: "https://i0.wp.com/beerbusterspodcast.com/wp-content/uploads/2015/01/Taps-1.jpg?ssl=1",
         flagship: "Head High",
-        likes: 0
+        likes: []
     },
     {
         name: "Bradley Brew Project",
@@ -18,7 +19,7 @@ const seedData = [
         website:"https://www.bradleybrew.com/",
         image: "https://pbs.twimg.com/profile_images/865597956421853184/4Iwiqf55_400x400.jpg",
         flagship: "Unicorn Girls",
-        likes: 0
+        likes: []
     },
     {
         name: "Carton Brewing",
@@ -26,14 +27,15 @@ const seedData = [
         website:"https://cartonbrewing.com/",
         image: "https://cartonbrewing.com/wp-content/uploads/2015/07/carton200x200.jpg",
         flagship: "077XX",
-        likes: 0
+        likes: []
     }
 ]
 
 //Index route
 router.get("/", async (req, res, next) => {
     try{
-        res.json(await Breweries.find({}))
+        const breweries = await Breweries.find({}).populate('likes.user', 'username');
+        res.json(breweries)
     }catch(err){
         console.log(err)
     }
@@ -71,6 +73,37 @@ router.post('/', async (req, res, next) => {
         console.log(err)
     }
 })
+
+// Like a brewery
+router.post('/:id/likes', requireToken, async (req, res, next) => {
+    try {
+        const breweryId = req.params.id;
+        const userId = req.user._id;
+        const brewery = await Breweries.findById(breweryId)
+        console.log(brewery)
+
+        const userLiked = brewery.likes.includes(userId)
+
+        if (userLiked) {
+            await Breweries.findByIdAndUpdate(postId, {
+                $pull: { likes: userId}
+            });
+            const updatedBrewery = await Breweries.findById(breweryId)
+            res.json(updatedBrewery)
+        }else {
+            await Breweries.findOneAndUpdate(breweryId, {
+                $push: { likes: userId }
+            })
+            const updatedBrewery = await Breweries.findById(breweryId)
+            res.json(updatedBrewery)
+        }
+    } catch (err) {
+        console.log(err);
+        next();
+    }
+});
+
+
 
 
 module.exports = router;
